@@ -1,14 +1,15 @@
 import axios from "axios";
 import type { IAbono, IAbonoResponse } from "../interface/abonos.interface";
+import config from "../config";
 
-const BASE_URL = "http://localhost:3000/api";
+const API = axios.create({
+  baseURL: config.apiUrl,
+});
 
 export class AbonosService {
   async getAbonos(): Promise<IAbonoResponse[]> {
     try {
-      const response = await axios.get<{ data: IAbonoResponse[] }>(
-        `${BASE_URL}/abonos`
-      );
+      const response = await API.get<{ data: IAbonoResponse[] }>("/abonos");
       return response.data.data;
     } catch (error) {
       if (error instanceof Error) {
@@ -23,7 +24,7 @@ export class AbonosService {
 
   async createAbono(abonoData: IAbono): Promise<IAbonoResponse> {
     try {
-      const response = await axios.post(`${BASE_URL}/abonos`, abonoData);
+      const response = await API.post("/abonos", abonoData);
       return response.data;
     } catch (error) {
       throw error;
@@ -32,10 +33,7 @@ export class AbonosService {
 
   async updateAbono(id: number, abonoData: IAbono): Promise<IAbonoResponse> {
     try {
-      const response = await axios.put(
-        `${BASE_URL}/update/abono/${id}`,
-        abonoData
-      );
+      const response = await axios.put(`/update/abono/${id}`, abonoData);
       return response.data;
     } catch (error) {
       throw error;
@@ -44,7 +42,7 @@ export class AbonosService {
 
   async deleteAbono(id: number): Promise<void> {
     try {
-      await axios.delete(`${BASE_URL}/delete/abono/${id}`);
+      await API.delete(`/delete/abono/${id}`);
     } catch (error) {
       throw error;
     }

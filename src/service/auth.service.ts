@@ -1,18 +1,16 @@
 import axios from "axios";
 import type { Login, LoginResponse } from "../interface/login.interface";
+import config from "../config";
 
-const BASE_URL = "http://localhost:3000/api/";
-
+const API = axios.create({
+  baseURL: config.apiUrl,
+});
 class AuthService {
   async login(credentials: Login): Promise<LoginResponse> {
     try {
-      const response = await axios.post<LoginResponse>(
-        `${BASE_URL}login`,
-        credentials,
-        {
-          withCredentials: true,
-        }
-      );
+      const response = await API.post<LoginResponse>(`login`, credentials, {
+        withCredentials: true,
+      });
 
       this.setupAxiosInterceptors();
 
@@ -25,12 +23,12 @@ class AuthService {
 
   logout() {
     axios.defaults.withCredentials = true;
-    return axios.post(`${BASE_URL}logout`);
+    return API.post(`logout`);
   }
 
   async isAuthenticated() {
     try {
-      const response = await axios.get(`${BASE_URL}check-auth`, {
+      const response = await API.get(`check-auth`, {
         withCredentials: true,
       });
       return response.status === 200;

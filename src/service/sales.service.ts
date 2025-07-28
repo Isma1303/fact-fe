@@ -1,12 +1,15 @@
 import axios, { type AxiosError } from "axios";
 import type { ISale, ISaleResponse } from "../interface/sales.interface";
+import config from "../config";
 
-const BASE_URL = "http://localhost:3000/api";
+const API = axios.create({
+  baseURL: config.apiUrl,
+});
 
 export class SalesService {
   async getSales(): Promise<ISaleResponse[]> {
     try {
-      const response = await axios.get(`${BASE_URL}/compras`);
+      const response = await API.get(`/compras`);
       return response.data.data;
     } catch (error) {
       if (error instanceof Error) {
@@ -29,7 +32,7 @@ export class SalesService {
         nombre_compra: saleData.nombre_compra,
       };
 
-      const response = await axios.post(`${BASE_URL}/compras`, dataToSend, {
+      const response = await API.post(`/compras`, dataToSend, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -55,15 +58,11 @@ export class SalesService {
         pagado: saleData.pagado,
         nombre_compra: saleData.nombre_compra,
       };
-      const response = await axios.put(
-        `${BASE_URL}/update/compra/${id}`,
-        dataToSend,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await API.put(`/update/compra/${id}`, dataToSend, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       return response.data;
     } catch (error) {
       if (error instanceof Error) {
@@ -78,7 +77,7 @@ export class SalesService {
 
   async deleteSale(id: number): Promise<void> {
     try {
-      await axios.delete(`${BASE_URL}/delete/crompra/${id}`);
+      await API.delete(`/delete/crompra/${id}`);
     } catch (error) {
       if (error instanceof Error) {
         console.error(
