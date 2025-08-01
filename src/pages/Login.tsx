@@ -61,7 +61,7 @@ export default function Login() {
 
           <Box
             component="form"
-            onSubmit={handleSubmit}
+            // onSubmit={handleSubmit}
             className="flex flex-col gap-8"
           >
             <TextField
@@ -96,7 +96,8 @@ export default function Login() {
             />
 
             <Button
-              type="submit"
+              // type=""
+              onClick={handleSubmit}
               variant="contained"
               color="primary"
               fullWidth

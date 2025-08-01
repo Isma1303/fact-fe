@@ -1,5 +1,5 @@
 const config = {
-  apiUrl: import.meta.env.BASE_URL,
+  apiUrl: import.meta.env.VITE_API_URL,
 };
 
 export default config;

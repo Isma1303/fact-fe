@@ -8,7 +8,7 @@ const API = axios.create({
 class AuthService {
   async login(credentials: Login): Promise<LoginResponse> {
     try {
-      const response = await API.post<LoginResponse>(`login`, credentials, {
+      const response = await API.post<LoginResponse>(`/login`, credentials, {
         withCredentials: true,
       });
 
@@ -23,12 +23,12 @@ class AuthService {
 
   logout() {
     axios.defaults.withCredentials = true;
-    return API.post(`logout`);
+    return API.post(`/logout`);
   }
 
   async isAuthenticated() {
     try {
-      const response = await API.get(`check-auth`, {
+      const response = await API.get(`/check-auth`, {
         withCredentials: true,
       });
       return response.status === 200;
