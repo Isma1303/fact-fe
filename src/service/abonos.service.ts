@@ -9,7 +9,9 @@ const API = axios.create({
 export class AbonosService {
   async getAbonos(): Promise<IAbonoResponse[]> {
     try {
-      const response = await API.get<{ data: IAbonoResponse[] }>("/abonos");
+      const response = await API.get<{ data: IAbonoResponse[] }>(
+        `/abonos`
+      );
       return response.data.data;
     } catch (error) {
       if (error instanceof Error) {
@@ -33,7 +35,7 @@ export class AbonosService {
 
   async updateAbono(id: number, abonoData: IAbono): Promise<IAbonoResponse> {
     try {
-      const response = await axios.put(`/update/abono/${id}`, abonoData);
+      const response = await API.put(`/update/abono/${id}`, abonoData);
       return response.data;
     } catch (error) {
       throw error;

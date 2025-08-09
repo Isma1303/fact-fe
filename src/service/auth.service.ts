@@ -8,9 +8,13 @@ const API = axios.create({
 class AuthService {
   async login(credentials: Login): Promise<LoginResponse> {
     try {
-      const response = await API.post<LoginResponse>(`/login`, credentials, {
-        withCredentials: true,
-      });
+      const response = await API.post<LoginResponse>(
+        `/login`,
+        credentials,
+        {
+          withCredentials: true,
+        }
+      );
 
       this.setupAxiosInterceptors();
 

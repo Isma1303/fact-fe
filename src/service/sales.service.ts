@@ -1,7 +1,6 @@
 import axios, { type AxiosError } from "axios";
 import type { ISale, ISaleResponse } from "../interface/sales.interface";
 import config from "../config";
-
 const API = axios.create({
   baseURL: config.apiUrl,
 });
@@ -77,7 +76,7 @@ export class SalesService {
 
   async deleteSale(id: number): Promise<void> {
     try {
-      await API.delete(`/delete/crompra/${id}`);
+      await API.delete(`/delete/compra/${id}`);
     } catch (error) {
       if (error instanceof Error) {
         console.error(
